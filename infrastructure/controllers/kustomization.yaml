@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - cert-manager.yaml
   - github.com/metallb/metallb/config/native?ref=v0.13.10
-  - ingress-nginx.yaml
+  - ingress-traefik.yaml
   - weave-gitops.yaml

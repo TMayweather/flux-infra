@@ -29,11 +29,55 @@ spec:
         name: traefik
         namespace: traefik
       interval: 12h
-  # values:
-  #   controller:
-  #     service:
-  #       type: "LoadBalancer"
-  #   admissionWebhooks:
-  #     enabled: false
-      valuesFiles: 
-        - flux-infra/infrastructure/configs/values.yaml
+  values:
+    globalArguments:
+      - "--global.sendanonymoususage=false"
+      - "--global.checknewversion=false"
+
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--log.level=DEBUG"
+
+    deployment:
+      enabled: true
+      replicas: 1
+      annotations: {}
+      podAnnotations: {}
+      additionalContainers: []
+      initContainers: []
+
+    ports:
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
+
+    ingressRoute:
+      dashboard:
+        enabled: false
+
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik-internal
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        allowExternalNameServices: true
+        publishedService:
+          enabled: false
+
+    rbac:
+      enabled: true
+
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations: {}
+      labels: {}
+      spec:
+        loadBalancerIP: 192.168.1.251
+      loadBalancerSourceRanges: []
+      externalIPs: []
+

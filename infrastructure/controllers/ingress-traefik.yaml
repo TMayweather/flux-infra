@@ -27,7 +27,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: traefik
+        namespace: flux-system
       interval: 12h
   values:
     globalArguments:

@@ -13,7 +13,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 24h
-  url: https://traefik.github.io/charts
+  url: https://helm.traefik.io/traefik
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -25,60 +25,53 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "23.1.0"
+      version: 23.1.0
       sourceRef:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
       interval: 12h
-  # values:
-  #   globalArguments:
-  #     - "--global.sendanonymoususage=false"
-  #     - "--global.checknewversion=false"
+  values:
+    controller:
+      service:
+        enabled: true
+        type: LoadBalancer
+    annotations: {}
+    labels: {}
+    spec:
+    loadBalancerIP: 192.168.1.251 # this should be an IP in the MetalLB range
+    loadBalancerSourceRanges: []
+    externalIPs: []
 
-  #   additionalArguments:
-  #     - "--serversTransport.insecureSkipVerify=true"
-  #     - "--log.level=DEBUG"
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik-internal
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        allowExternalNameServices: true
+        publishedService:
+          enabled: false
 
-  #   deployment:
-  #     enabled: true
-  #     replicas: 1
-  #     annotations: {}
-  #     podAnnotations: {}
-  #     additionalContainers: []
-  #     initContainers: []
+    rbac:
+      enabled: true
 
-  #   ports:
-  #     web:
-  #       redirectTo: websecure
-  #     websecure:
-  #       tls:
-  #         enabled: true
+    ingressRoute:
+      dashboard:
+        enabled: false
 
-  #   ingressRoute:
-  #     dashboard:
-  #       enabled: false
+    ports:
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
 
-  #   providers:
-  #     kubernetesCRD:
-  #       enabled: true
-  #       ingressClass: traefik-internal
-  #       allowExternalNameServices: true
-  #     kubernetesIngress:
-  #       enabled: true
-  #       allowExternalNameServices: true
-  #       publishedService:
-  #         enabled: false
+    globalArguments:
+      - "--global.sendanonymoususage=false"
+      - "--global.checknewversion=false"
 
-  #   rbac:
-  #     enabled: true
-
-  #   service:
-  #     enabled: true
-  #     type: LoadBalancer
-  #     annotations: {}
-  #     labels: {}
-  #     spec:
-  #       loadBalancerIP: 192.168.1.251
-  #     loadBalancerSourceRanges: []
-  #     externalIPs: []
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--log.level=DEBUG"

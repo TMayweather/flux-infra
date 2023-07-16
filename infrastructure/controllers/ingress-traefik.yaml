@@ -31,54 +31,54 @@ spec:
         name: traefik
         namespace: flux-system
       interval: 12h
-  values:
-    globalArguments:
-      - "--global.sendanonymoususage=false"
-      - "--global.checknewversion=false"
+  # values:
+  #   globalArguments:
+  #     - "--global.sendanonymoususage=false"
+  #     - "--global.checknewversion=false"
 
-    additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--log.level=DEBUG"
+  #   additionalArguments:
+  #     - "--serversTransport.insecureSkipVerify=true"
+  #     - "--log.level=DEBUG"
 
-    deployment:
-      enabled: true
-      replicas: 1
-      annotations: {}
-      podAnnotations: {}
-      additionalContainers: []
-      initContainers: []
+  #   deployment:
+  #     enabled: true
+  #     replicas: 1
+  #     annotations: {}
+  #     podAnnotations: {}
+  #     additionalContainers: []
+  #     initContainers: []
 
-    ports:
-      web:
-        redirectTo: websecure
-      websecure:
-        tls:
-          enabled: true
+  #   ports:
+  #     web:
+  #       redirectTo: websecure
+  #     websecure:
+  #       tls:
+  #         enabled: true
 
-    ingressRoute:
-      dashboard:
-        enabled: false
+  #   ingressRoute:
+  #     dashboard:
+  #       enabled: false
 
-    providers:
-      kubernetesCRD:
-        enabled: true
-        ingressClass: traefik-internal
-        allowExternalNameServices: true
-      kubernetesIngress:
-        enabled: true
-        allowExternalNameServices: true
-        publishedService:
-          enabled: false
+  #   providers:
+  #     kubernetesCRD:
+  #       enabled: true
+  #       ingressClass: traefik-internal
+  #       allowExternalNameServices: true
+  #     kubernetesIngress:
+  #       enabled: true
+  #       allowExternalNameServices: true
+  #       publishedService:
+  #         enabled: false
 
-    rbac:
-      enabled: true
+  #   rbac:
+  #     enabled: true
 
-    service:
-      enabled: true
-      type: LoadBalancer
-      annotations: {}
-      labels: {}
-      spec:
-        loadBalancerIP: 192.168.1.251
-      loadBalancerSourceRanges: []
-      externalIPs: []
+  #   service:
+  #     enabled: true
+  #     type: LoadBalancer
+  #     annotations: {}
+  #     labels: {}
+  #     spec:
+  #       loadBalancerIP: 192.168.1.251
+  #     loadBalancerSourceRanges: []
+  #     externalIPs: []

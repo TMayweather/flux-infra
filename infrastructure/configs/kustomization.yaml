@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ipaddresspool.yaml
   - l2advertisement.yaml
-  - traefik-values.yaml
   - default-headers.yaml
   - secret-cf-token.yaml
   - cluster-issuers.yaml

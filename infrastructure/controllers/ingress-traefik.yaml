@@ -3,12 +3,14 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: traefik
+  labels:
+    toolkit.fluxcd.io/tenant: sre-team
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: traefik
-  namespace: traefik
+  namespace: flux-system
 spec:
   interval: 24h
   url: https://traefik.github.io/charts
@@ -23,11 +25,11 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: "*"
+      version: "23.1.0"
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: traefik
+        namespace: flux-system
       interval: 12h
   values:
     globalArguments:

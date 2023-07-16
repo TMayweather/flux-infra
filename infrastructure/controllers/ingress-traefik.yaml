@@ -36,4 +36,4 @@ spec:
   #   admissionWebhooks:
   #     enabled: false
       valuesFiles: 
-        - flux-infra/infrastructure/configs/traefik-values.yaml
+        - flux-infra/infrastructure/configs/values.yaml

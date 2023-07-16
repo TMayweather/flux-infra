@@ -35,4 +35,4 @@ spec:
   #       type: "LoadBalancer"
   #   admissionWebhooks:
   #     enabled: false
-    valuesFiles: ../configs/traefik-values.yaml
+      valuesFiles: ../configs/traefik-values.yaml

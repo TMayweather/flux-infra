@@ -26,52 +26,54 @@ spec:
     spec:
       chart: traefik
       version: 23.1.0
+      valuesFiles:
+        - traefik-values.yaml
       sourceRef:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
       interval: 12h
-  values:
-    controller:
-      service:
-        enabled: true
-        type: LoadBalancer
-    annotations: {}
-    labels: {}
-    spec:
-    loadBalancerIP: 192.168.1.251 # this should be an IP in the MetalLB range
-    loadBalancerSourceRanges: []
-    externalIPs: []
+  # values:
+  #   controller:
+  #     service:
+  #       enabled: true
+  #       type: LoadBalancer
+  #   annotations: {}
+  #   labels: {}
+  #   spec:
+  #   loadBalancerIP: 192.168.1.251 # this should be an IP in the MetalLB range
+  #   loadBalancerSourceRanges: []
+  #   externalIPs: []
 
-    providers:
-      kubernetesCRD:
-        enabled: true
-        ingressClass: traefik-internal
-        allowExternalNameServices: true
-      kubernetesIngress:
-        enabled: true
-        allowExternalNameServices: true
-        publishedService:
-          enabled: false
+  #   providers:
+  #     kubernetesCRD:
+  #       enabled: true
+  #       ingressClass: traefik-internal
+  #       allowExternalNameServices: true
+  #     kubernetesIngress:
+  #       enabled: true
+  #       allowExternalNameServices: true
+  #       publishedService:
+  #         enabled: false
 
-    rbac:
-      enabled: true
+  #   rbac:
+  #     enabled: true
 
-    ingressRoute:
-      dashboard:
-        enabled: false
+  #   ingressRoute:
+  #     dashboard:
+  #       enabled: false
 
-    ports:
-      web:
-        redirectTo: websecure
-      websecure:
-        tls:
-          enabled: true
+  #   ports:
+  #     web:
+  #       redirectTo: websecure
+  #     websecure:
+  #       tls:
+  #         enabled: true
 
-    globalArguments:
-      - "--global.sendanonymoususage=false"
-      - "--global.checknewversion=false"
+  #   globalArguments:
+  #     - "--global.sendanonymoususage=false"
+  #     - "--global.checknewversion=false"
 
-    additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--log.level=DEBUG"
+  #   additionalArguments:
+  #     - "--serversTransport.insecureSkipVerify=true"
+  #     - "--log.level=DEBUG"

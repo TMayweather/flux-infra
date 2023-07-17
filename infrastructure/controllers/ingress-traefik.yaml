@@ -22,12 +22,13 @@ metadata:
   namespace: traefik
 spec:
   interval: 30m
+  timeout: 10m
   chart:
     spec:
       chart: traefik
       version: 23.1.0
       valuesFiles:
-        - traefik-values.yaml
+        - values.yaml
       sourceRef:
         kind: HelmRepository
         name: traefik
